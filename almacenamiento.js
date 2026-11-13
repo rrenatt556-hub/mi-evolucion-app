@@ -14,12 +14,22 @@ window.EvoStorage = (() => {
    return isoLocal(d)===s?d:null;
  }
  function defaults(){
-   const start=isoLocal();
-   const names=[["Levantarme temprano","personal"],["Beber suficiente agua","fisico"],["Leer 20 minutos","mental"],["Hacer ejercicio","fisico"],["Meditar","emocional"]];
-   return {version:3,habitos:names.map(([nombre,categoria],i)=>({
-     id:`inicial-${i+1}`,nombre,categoria,creado:start,archivado:null,
-     segmentos:[{desde:start,dias:[...ALL]}]
-   })),registros:{}};
+   // La aplicación comienza vacía: cada persona crea sus propios hábitos.
+   return {version:3,habitos:[],registros:{}};
+ }
+ function limpiarHabitosDeEjemplo(data){
+   // Retira únicamente los cinco hábitos de demostración de versiones anteriores.
+   // Conserva íntegros todos los hábitos y registros creados por la persona.
+   const ids=new Set(data.habitos
+     .filter(h=>/^inicial-[1-5]$/.test(h.id))
+     .map(h=>h.id));
+   if(!ids.size)return data;
+   data.habitos=data.habitos.filter(h=>!ids.has(h.id));
+   for(const fecha of Object.keys(data.registros)){
+     for(const id of ids)delete data.registros[fecha][id];
+     if(!Object.keys(data.registros[fecha]).length)delete data.registros[fecha];
+   }
+   return data;
  }
  function check(data){
    if(!data||typeof data!=="object"||data.version!==3||!Array.isArray(data.habitos)||
@@ -65,10 +75,14 @@ window.EvoStorage = (() => {
  }
  function read(){
    const raw=localStorage.getItem(KEY3);
-   if(raw!==null)return {data:check(JSON.parse(raw)),origen:"v03"};
+   if(raw!==null){
+     const data=limpiarHabitosDeEjemplo(check(JSON.parse(raw)));
+     save(data);
+     return {data,origen:"v03"};
+   }
    const raw2=localStorage.getItem(KEY2);
    if(raw2!==null){
-     const data=migrate(JSON.parse(raw2));
+     const data=limpiarHabitosDeEjemplo(migrate(JSON.parse(raw2)));
      // Si no puede guardarse la versión nueva, avisamos y no operamos sin persistencia.
      save(data);
      return {data,origen:"migrado"};
