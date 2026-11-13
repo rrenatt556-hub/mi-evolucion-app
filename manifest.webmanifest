@@ -1,0 +1,25 @@
+{
+  "name": "Mi Evolución Personal & Familiar",
+  "short_name": "Mi Evolución",
+  "description": "Hábitos, metas y actividades familiares sin suscripciones.",
+  "lang": "es",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f7f6",
+  "theme_color": "#164e48",
+  "icons": [
+    {
+      "src": "assets/icono-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icono-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

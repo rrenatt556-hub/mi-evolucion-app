@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="#164e48" name="theme-color"/>
+<title>Mi Evolución Personal &amp; Familiar · V1.0</title>
+<link href="manifest.webmanifest" rel="manifest"/>
+<link href="assets/icono-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="assets/icono-192.png" rel="apple-touch-icon"/>
+<link href="css/estilos.css" rel="stylesheet"/>
+<script defer="" src="js/almacenamiento.js"></script>
+<script defer="" src="js/app.js"></script>
+<script defer="" src="js/desarrollo.js"></script>
+<script defer="" src="js/respaldo-integral.js"></script>
+<script defer="" src="js/pwa.js"></script>
+
+
+
+<script defer="" src="js/gemini-informe.js"></script>
+<script defer="" src="js/portabilidad.js"></script>
+
+
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="brand">🌱 MI EVOLUCIÓN <small>PERSONAL &amp; FAMILIAR</small></div>
+<nav aria-label="Navegación principal"><a href="#inicio">🏠 Inicio</a><a href="#habitos">✅ Mis hábitos</a><a href="#tracker">🗓️ Habit Tracker</a><a href="#calendario">📅 Calendario</a><a href="#estadisticas">📈 Estadísticas</a><a href="#desarrollo">🧠 Desarrollo personal</a><a href="#objetivos">🎯 Metas</a><a href="#familia">👨‍👩‍👧‍👦 Familia</a><a href="#gemini">🤖 Gemini</a><a href="#dispositivos">📦 Trasladar a otro dispositivo</a><a href="#instalacion">📱 Instalación y acceso</a></nav>
+
+</aside>
+<main class="main">
+<header class="page-head" id="inicio">
+<div><p class="eyebrow">TU ESPACIO DE CRECIMIENTO</p><h1>Mi Evolución Personal &amp; Familiar</h1>
+<p class="muted">Pequeños pasos, progreso real.</p></div>
+<span class="date-chip" id="hoy-etiqueta"></span>
+</header>
+<section class="hero"><div><span>🌱 NUEVA ETAPA</span><h2>Tu espacio, a tu ritmo</h2>
+<p>Registra lo que importa.</p></div>
+
+</section>
+<section aria-label="Indicadores para la fecha seleccionada" class="metrics">
+<article class="metric"><span>📅 Programados</span><strong id="habitos-total">0</strong></article>
+<article class="metric"><span>✅ Completados</span><strong id="habitos-completados">0</strong></article>
+<article class="metric"><span>📊 Cumplimiento</span><strong id="porcentaje">—</strong></article>
+<article class="metric"><span>🔥 Racha general</span><strong id="racha">0 días</strong></article>
+</section>
+<div aria-live="polite" class="notice" hidden="" id="aviso" role="status"></div>
+<section class="card" id="habitos">
+<div class="section-head"><div><h2>✅ Mis hábitos</h2><p class="muted">Selecciona una fecha y marca lo que completaste.</p></div>
+<div class="date-control"><label for="fecha-registro">Fecha</label>
+<input id="fecha-registro" type="date"/><button class="button secondary" id="volver-hoy" type="button">Ir a hoy</button></div>
+</div>
+<div class="habit-list" id="lista-habitos"></div>
+<p class="empty" hidden="" id="mensaje-vacio">No tienes hábitos programados para esta fecha.</p>
+<div class="progress-track"><div id="progreso-relleno"></div></div>
+<p class="muted fine" id="progreso-texto">Sin actividades programadas.</p>
+</section>
+<section class="card">
+<div class="section-head"><h2>➕ Crear hábito</h2><span class="pill">Personalizable</span></div>
+<form id="formulario-habito">
+<div class="form-grid">
+<label>Nombre del hábito<input id="nombre-habito" maxlength="80" placeholder="Ej. Leer 20 minutos" required="" type="text"/></label>
+<label>Categoría<select id="categoria-habito">
+<option value="mental">🧠 Desarrollo mental</option><option value="fisico">💪 Desarrollo físico</option>
+<option value="emocional">❤️ Bienestar emocional</option><option value="personal">🌱 Personal</option>
+<option value="familiar">👨‍👩‍👧‍👦 Familiar</option>
+</select></label>
+</div>
+<fieldset class="day-fieldset"><legend>Días programados (elige uno o más)</legend>
+<div class="day-choices" id="dias-crear"></div>
+</fieldset>
+<button class="button primary" type="submit">+ Agregar hábito</button>
+</form>
+<details class="archive-area"><summary>🗄️ Hábitos archivados <span id="archivados-cantidad">(0)</span></summary>
+<p class="muted fine">Archivar conserva el historial. Reactivar comienza una nueva etapa desde hoy.</p>
+<div class="habit-list" id="lista-archivados"></div>
+</details>
+</section>
+<section class="card" id="tracker">
+<div class="section-head"><div><h2>🗓️ Habit Tracker mensual</h2>
+</div><div class="month-nav">
+<button aria-label="Mes anterior" class="button secondary" id="mes-anterior" type="button">‹</button>
+<strong id="nombre-mes"></strong>
+<button aria-label="Mes siguiente" class="button secondary" id="mes-siguiente" type="button">›</button></div>
+</div>
+<div class="table-scroll"><table class="tracker-table" id="tracker-tabla"></table></div>
+
+</section>
+<section class="card" id="calendario">
+<div class="section-head"><h2>📅 Calendario mensual</h2><span class="pill">Porcentaje diario</span></div>
+<div class="calendar" id="calendario-grid"></div>
+</section>
+<section class="card" id="estadisticas">
+<div class="section-head"><h2>📈 Estadísticas</h2><span class="pill">Mes visible en el tracker</span></div>
+<div class="stats-grid">
+<div class="stat-panel"><span>Cumplimiento del mes (actividades programadas)</span><strong id="mes-porcentaje">—</strong></div>
+<div class="stat-panel"><span>Actividades completadas / programadas hasta hoy</span><strong id="mes-cantidad">0 / 0</strong></div>
+</div>
+<h3 class="subhead">Rachas por hábito</h3>
+<div class="streak-list" id="rachas-individuales"></div>
+<h3 class="subhead">Últimos siete días desde la fecha elegida</h3>
+<div class="table-scroll"><table class="history-table"><thead><tr><th>Fecha</th><th>Programados</th><th>Completados</th><th>Cumplimiento</th></tr></thead><tbody id="tabla-historial"></tbody></table></div>
+</section>
+<section class="card" id="respaldos" style="display:none">
+<h2>💾 Respaldos y portabilidad</h2>
+<p class="muted">Guarda el JSON en una carpeta privada, fuera del proyecto. La importación reemplaza los registros locales.</p>
+<div class="action-row">
+<button class="button primary" id="exportar-json" type="button">⬇ Descargar JSON</button>
+<button class="button secondary" id="exportar-csv" type="button">📊 Exportar CSV mensual</button>
+<button class="button secondary" id="importar-json" type="button">⬆ Importar JSON (V0.2/V0.3)</button>
+<input accept=".json,application/json" hidden="" id="archivo-importar" type="file"/>
+</div>
+<p class="warning">⚠️ Esta versión guarda datos solo en este navegador. No sincroniza celular y computadora.
+        No introduzcas información financiera ni emocional sensible hasta contar con almacenamiento y permisos adecuados.</p>
+</section>
+<section class="card" id="desarrollo">
+<div class="section-head"><div><h2>🧠💪 Desarrollo personal</h2>
+</div></div>
+<form class="v4-form" id="form-actividad">
+<label>Área <select id="actividad-area"><option value="mental">🧠 Mental</option><option value="fisico">💪 Físico</option></select></label>
+<label>Actividad <input id="actividad-nombre" maxlength="80" placeholder="Ej.: leer, caminar" required=""/></label>
+<label>Fecha <input id="actividad-fecha" required="" type="date"/></label>
+<label>Minutos <input id="actividad-minutos" max="1440" min="1" required="" type="number" value="20"/></label>
+<button class="button primary" type="submit">Registrar actividad</button>
+</form>
+<p class="muted fine" id="actividades-resumen"></p>
+<div aria-live="polite" class="v4-list" id="lista-actividades"></div>
+</section>
+<section class="card" id="objetivos">
+<div class="section-head"><div><h2>🎯 Metas personales y familiares</h2>
+</div></div>
+<form class="v4-form" id="form-meta">
+<label>Objetivo <input id="meta-nombre" maxlength="100" placeholder="Ej.: terminar un libro" required=""/></label>
+<label>Ámbito <select id="meta-ambito"><option value="personal">Personal</option><option value="familiar">Familiar</option></select></label>
+<label>Fecha objetivo <input id="meta-fecha" required="" type="date"/></label>
+<button class="button primary" type="submit">Agregar meta</button>
+</form>
+<div aria-live="polite" class="v4-list" id="lista-metas"></div>
+</section>
+<section class="card" id="familia">
+<div class="section-head"><div><h2>👨‍👩‍👧‍👦 Organización familiar</h2>
+</div></div>
+<form class="v4-form" id="form-tarea">
+<label>Tarea <input id="tarea-nombre" maxlength="100" placeholder="Ej.: organizar la casa" required=""/></label>
+<label>Fecha <input id="tarea-fecha" required="" type="date"/></label>
+<button class="button primary" type="submit">Agregar tarea</button>
+</form>
+<div aria-live="polite" class="v4-list" id="lista-tareas"></div>
+</section>
+<section class="card" id="respaldo-v4" style="display:none">
+<h2>💾 Respaldo de los módulos </h2>
+<p class="muted">Los hábitos V0.3 y los nuevos módulos se guardan por separado. Descarga <strong>ambos</strong> respaldos para conservar todo.</p>
+<div class="action-row">
+<button class="button primary" id="v4-exportar" type="button">⬇ Descargar desarrollo y familia (JSON)</button>
+<button class="button secondary" id="v4-importar" type="button">⬆ Restaurar desarrollo y familia</button>
+<input accept=".json,application/json" hidden="" id="v4-archivo" type="file"/>
+</div>
+<p class="warning">⚠️ Al importar se reemplazarán solamente los datos de desarrollo, metas y tareas V0.4. No se modifican tus hábitos V0.3. Los datos siguen siendo locales, sin sincronización ni control de usuarios.</p>
+</section>
+<section class="card" id="seguridad" style="display:none">
+<div class="section-head"><div>
+<h2>🛡️ Respaldo integral </h2>
+<p class="muted">Un archivo JSON para hábitos, actividades, metas y tareas. Sin servicios de pago.</p>
+</div><span class="pill">Almacenamiento local</span></div>
+<p class="muted">El respaldo integral <strong>no incluye Hogar &amp; Finanzas</strong> (se mantiene independiente).
+  Antes de restaurar, descarga una copia actual. El respaldo JSON no está cifrado.</p>
+<div class="action-row">
+<button class="button primary" id="v5-exportar" type="button">⬇ Descargar respaldo integral</button>
+<button class="button secondary" id="v5-importar" type="button">⬆ Restaurar respaldo integral</button>
+<button class="button secondary" id="v5-comprobar" type="button">🔎 Comprobar almacenamiento</button>
+<input accept=".json,application/json" hidden="" id="v5-archivo" type="file"/>
+</div>
+<p aria-live="polite" class="muted fine" id="v5-estado" role="status">Este dispositivo todavía no se ha comprobado.</p>
+<p class="warning">⚠️ Los datos siguen guardados solo en este navegador. No existe sincronización, cifrado,
+  inicio de sesión ni respaldo automático en la nube. No incluyas datos financieros o emocionales sensibles.</p>
+</section>
+<section class="card" id="instalacion">
+<div class="section-head"><div><h2>📱 Instalación y acceso</h2>
+<p class="muted">Instala la aplicación desde un navegador compatible.</p></div></div>
+<p aria-live="polite" class="muted" id="pwa-estado" role="status">Comprobando compatibilidad…</p>
+<div class="action-row">
+<button class="button primary" hidden="" id="pwa-instalar" type="button">📲 Instalar aplicación</button>
+<button class="button secondary" hidden="" id="pwa-actualizar" type="button">🔄 Cargar nueva versión</button>
+</div>
+
+
+</section>
+
+
+
+<section class="card" id="gemini">
+<div class="card-head"><h2>🤖 Gemini · Informe para consulta manual</h2></div>
+
+<div class="gemini-botones">
+<button id="gemini-generar" type="button">📊 Generar informe local</button>
+<button id="gemini-abrir" type="button">↗ Abrir Gemini</button>
+</div>
+<label class="gemini-etiqueta" for="gemini-texto">Informe editable (revisa antes de copiarlo)</label>
+<textarea class="gemini-informe" id="gemini-texto" placeholder="Pulsa Generar informe local. Aquí podrás revisar y editar el texto antes de compartirlo." rows="18"></textarea>
+<label class="gemini-confirmacion"><input id="gemini-autorizar" type="checkbox"/> He revisado el informe y acepto copiarlo para decidir si lo comparto con Gemini.</label>
+<button id="gemini-copiar" type="button">📋 Copiar informe revisado</button>
+<p aria-live="polite" class="muted" id="gemini-estado" role="status">Ningún dato se envía automáticamente a Google ni a otro proveedor.</p>
+
+</section>
+<section class="card" id="dispositivos">
+<p class="muted">Descarga tus hábitos, actividades, metas y tareas en un archivo. La importación reemplaza esos registros en este dispositivo.</p><div class="card-head"><h2>📦 Portabilidad entre computadora y celular</h2></div>
+
+
+<div class="action-row">
+<button id="port-exportar" type="button">⬇ Descargar paquete completo</button>
+<label for="port-archivo">Seleccionar paquete de respaldo <input accept=".json,application/json" id="port-archivo" type="file"/></label>
+<button disabled="" id="port-importar" type="button">⬆ Importar y reemplazar (confirmar)</button>
+</div>
+<pre class="sync-preview" id="port-previa">Todavía no se ha seleccionado un archivo.</pre>
+<p aria-live="polite" id="port-estado" role="status"></p>
+
+</section>
+<footer>🌱 Mi Evolución Personal &amp; Familiar · V1.0 · Windows local · Finanzas oficiales en solo lectura</footer>
+</main>
+</div>
+<dialog class="edit-dialog" id="modal-editar">
+<form id="formulario-editar">
+<h2>✏️ Editar hábito</h2>
+<input id="editar-id" type="hidden"/>
+<label>Nombre<input id="editar-nombre" maxlength="80" required="" type="text"/></label>
+<label>Categoría<select id="editar-categoria">
+<option value="mental">🧠 Desarrollo mental</option><option value="fisico">💪 Desarrollo físico</option>
+<option value="emocional">❤️ Bienestar emocional</option><option value="personal">🌱 Personal</option>
+<option value="familiar">👨‍👩‍👧‍👦 Familiar</option></select></label>
+<fieldset class="day-fieldset"><legend>Días programados (aplicará desde hoy)</legend><div class="day-choices" id="dias-editar"></div></fieldset>
+<p class="muted fine">Cambiar los días de un hábito no altera su programación histórica: la nueva frecuencia empieza hoy.</p>
+<div class="action-row"><button class="button secondary" id="cancelar-edicion" type="button">Cancelar</button><button class="button primary" type="submit">Guardar cambios</button></div>
+</form>
+</dialog>
+</body>
+</html>
