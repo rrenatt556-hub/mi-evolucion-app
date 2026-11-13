@@ -1,6 +1,6 @@
 /* Caché de archivos de Mi Evolución Personal & Familiar.
    Esta versión utiliza los archivos ubicados en la raíz del repositorio. */
-const VERSION = "mi-evolucion-v10-rootpaths-3-empty-start";
+const VERSION = "mi-evolucion-v11-one-time-clean-start";
 const SHELL = [
   "./", "./index.html", "./estilos.css", "./almacenamiento.js",
   "./app.js", "./desarrollo.js", "./respaldo-integral.js",

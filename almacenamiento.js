@@ -74,6 +74,14 @@ window.EvoStorage = (() => {
    return check(nuevo);
  }
  function read(){
+   // Inicio limpio de una sola vez: elimina los datos de demostración que ya
+   // estaban guardados en este navegador. Después, los datos nuevos se conservan.
+   const CLEAN_KEY="mi_evolucion_inicio_limpio_v1";
+   if(localStorage.getItem(CLEAN_KEY)!=="1"){
+     localStorage.removeItem(KEY3);
+     localStorage.removeItem(KEY2);
+     localStorage.setItem(CLEAN_KEY,"1");
+   }
    const raw=localStorage.getItem(KEY3);
    if(raw!==null){
      const data=limpiarHabitosDeEjemplo(check(JSON.parse(raw)));

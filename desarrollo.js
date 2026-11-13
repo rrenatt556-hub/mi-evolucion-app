@@ -131,6 +131,11 @@ async function v4Importar(evento){
 }
 function iniciarV4(){
  try{
+  const CLEAN_V4_KEY="mi_evolucion_modulos_inicio_limpio_v1";
+  if(localStorage.getItem(CLEAN_V4_KEY)!=="1"){
+   localStorage.removeItem(V4_KEY);
+   localStorage.setItem(CLEAN_V4_KEY,"1");
+  }
   const actual=localStorage.getItem(V4_KEY);
   v4=actual?v4Validar(JSON.parse(actual)):v4Nuevo();
  }catch(e){
